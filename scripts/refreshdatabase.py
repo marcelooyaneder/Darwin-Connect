@@ -3,6 +3,11 @@ import easygui as eg
 import pandas as pd
 import filecmp
 import shutil
+from python_firebase_url_shortener.url_shortener import UrlShortener
+import time
+import pyqrcode
+from PIL import Image
+
 
 class refreshdatabase():
     def diropenbox(self):
@@ -72,10 +77,147 @@ class refreshdatabase():
         shutil.rmtree('temp/', ignore_errors=False, onerror=None)
         return 
 
-    def infowriting(self):
-        pass
-    def dynamiclinks(self):
-        pass
-    def qr_manager(self):
-        pass
+    def infowriting(self,ID,info,option):  #option 1 for showroom, 0 files
+        try: 
+            if option ==0:
+                filename = f"files/{ID}.txt" 
+            elif option==1:
+                filename = f"showroom_files/{ID}.txt" 
+            os.makedirs(os.path.dirname(filename), exist_ok=True)
+            with open(filename,'w') as fil:
+                fil.write(str(info))
+            print(f'a new entry has been found, file...{ID}.txt has been created.')
+        except:
+            print(f'permission to write in {filename} has been denied...')
+        return 
 
+    def dynamiclinks(self,longurl):
+        user_info=pd.read_csv("documents\dynamiclinks_user_info.csv",header=0,sep=';')
+        api_key=user_info['api_key'][0] #this need to be created on the firebase webpage
+        sub_domain=user_info['sub_domain'][0] #this need to be created on firebase webpage
+        try:
+            url_shortener = UrlShortener(api_key,sub_domain)
+            shorturl=url_shortener.get_short_link(longurl)
+        except:
+            print('Oops! you have reached the limit of urls')
+        time.sleep(0.2) #to not break the limits of firebase
+        return shorturl
+        
+    def qr_manager(self,ID,short_url,option): #option 1 for showroom, 0 files
+        try:
+            if option ==0:
+                filename = f"qrs/{ID}.png"
+            elif option==1:
+                filename = f"qrs_showroom/{ID}.png"
+            os.makedirs(os.path.dirname(filename), exist_ok=True)
+            quick_response_code= pyqrcode.create(short_url)
+            with open(filename, 'wb') as f:
+                    quick_response_code.png(f, scale=8,module_color=(0,102,0,255),background=(255, 255, 255, 255))
+            try:
+                img = Image.open(filename)
+                width, height = img.size
+                logo_size =50
+                logo = Image.open('documents\logo.png')
+                xmin = ymin = int((width / 2) - (logo_size / 2))
+                xmax = ymax = int((width / 2) + (logo_size / 2))
+                logo = logo.resize((xmax - xmin, ymax - ymin))
+                img.paste(logo, (xmin, ymin, xmax, ymax))
+                img.save(filename)
+            except:
+                pass
+        except:
+            print(f'permission to write in {filename} has been denied...')
+
+
+#######################################
+########FILE MANAGEMENT SECTION########
+#######################################
+
+dataframe=file_manager()
+file_mng_button=eg.buttonbox(msg='select an option',title='select an option',choices=['Open a file','Create a custom dwc file'])
+if file_mng_button=='Open a file':
+    og_data,data,indexo,og_columns_df=dataframe.file_opener() #no considerar para file_creation
+    IDs=data.index.tolist() #no considerar para file_creation 
+    showroom_option_button=eg.buttonbox(msg='do you wish to create files for a showroom',title='select a option',choices=['Yes','No'])
+    if showroom_option_button=='Yes':
+        data_showroom=og_data.copy()
+        msg='select the columns to keep on your showroom dataframe'
+        title='select'
+        choicebox=eg.multchoicebox(msg,title,og_columns_df)
+        try:
+            data_showroom=data_showroom[choicebox]
+        except:
+            pass
+    elif showroom_option_button=='No':
+        pass
+elif file_mng_button=='Create a custom dwc file':
+    data=dataframe.file_creation() #no considerar para file_opener
+    data.to_csv('custom_dwc_frame.csv',sep=';', encoding='utf-8') #considerar para file opener
+    print ('your file is ready....')
+    print(data)
+    exit()
+
+print(data)
+
+
+#compare files or create them
+print('compare/create files...')
+if os.path.isdir('files')==True:
+    for id in IDs:
+        comparefiles(id,data.loc[id],0)
+else:
+    for id in IDs:
+        infowriting(id,data.loc[id],0)
+
+if showroom_option_button=='Yes':
+    if os.path.isdir('showroom_files')==True:
+        for id in IDs:
+            comparefiles(id,data_showroom.loc[id],1)
+    else:
+        for id in IDs:
+            infowriting(id,data_showroom.loc[id],1)
+print ('there is nothing more to do here...')
+
+#compare qr files or create them
+user_info=pd.read_csv("documents\dynamiclinks_user_info.csv",header=0,sep=';')
+GitHub_username=user_info['GitHub_username'][0] #this need to be created on the GitHub webpage
+Repository_name=user_info['Repository_name'][0] #this need to be created on the firebase webpage
+print('create non existing qrs files...')
+if os.path.isdir('qrs')==True:
+    for id in IDs:
+        print(f'file {id} of file {IDs[-1]}',end='\r', flush=True)
+        path=f"qrs/{id}.png"
+        if os.path.isfile(path)==False:
+            longurl=f'https://raw.githubusercontent.com/{GitHub_username}/{Repository_name}/master/files/{id}.txt'            
+            shorturl=dynamiclinks(longurl)
+            qr_manager(id,shorturl,0)
+        else:
+            pass
+else:
+    for id in IDs:
+        print(f'file {id} of file {IDs[-1]}',end='\r', flush=True)
+        longurl=f'https://raw.githubusercontent.com/{GitHub_username}/{Repository_name}/master/files/{id}.txt'
+        shorturl=dynamiclinks(longurl)
+        qr_manager(id,shorturl,0)
+
+if showroom_option_button=='Yes':
+    print('create non existing qrs shorwoom files...')
+    if os.path.isdir('qrs_showroom')==True:
+        for id in IDs:
+            print(f'file {id} of file {IDs[-1]}',end='\r', flush=True)
+            path=f"qrs_showroom/{id}.png"
+            if os.path.isfile(path)==False:
+                longurl=f'https://raw.githubusercontent.com/{GitHub_username}/{Repository_name}/master/showroom_files/{id}.txt'
+                shorturl=dynamiclinks(longurl)
+                qr_manager(id,shorturl,1)
+            else:
+                pass
+    else:
+        for id in IDs:
+            print(f'file {id} of file {IDs[-1]}',end='\r', flush=True)
+            longurl=f'https://raw.githubusercontent.com/{GitHub_username}/{Repository_name}/master/showroom_files/{id}.txt'
+            shorturl=dynamiclinks(longurl)
+            qr_manager(id,shorturl,1)
+else:
+    pass
+print ('there is nothing more to do here...')
