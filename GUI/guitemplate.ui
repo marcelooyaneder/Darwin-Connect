@@ -53,7 +53,7 @@
      <string>Etiquetado</string>
     </property>
    </widget>
-   <widget class="QSplitter" name="splitter">
+   <widget class="QSplitter" name="pathwaysanswer">
     <property name="geometry">
      <rect>
       <x>30</x>
@@ -85,6 +85,39 @@
       <string/>
      </property>
     </widget>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>20</y>
+      <width>271</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="visitors_question">
+     <item>
+      <widget class="QLabel" name="question_1">
+       <property name="text">
+        <string>¿Deseas crear archivos para visitantes?</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="question_1_pos_ans">
+       <property name="text">
+        <string>Si</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QRadioButton" name="question_1_neg_ans">
+       <property name="text">
+        <string>No</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
