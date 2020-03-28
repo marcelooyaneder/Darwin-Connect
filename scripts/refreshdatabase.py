@@ -129,11 +129,11 @@ class refreshdatabase():
             print(f'permission to write in {filename} has been denied...')
 
 
-#######################################
+"""#######################################
 ########FILE MANAGEMENT SECTION########
 #######################################
 
-dataframe=file_manager()
+dataframe=refreshdatabase()
 file_mng_button=eg.buttonbox(msg='select an option',title='select an option',choices=['Open a file','Create a custom dwc file'])
 if file_mng_button=='Open a file':
     og_data,data,indexo,og_columns_df=dataframe.file_opener() #no considerar para file_creation
@@ -158,7 +158,6 @@ elif file_mng_button=='Create a custom dwc file':
     exit()
 
 print(data)
-
 
 #compare files or create them
 print('compare/create files...')
@@ -220,4 +219,4 @@ if showroom_option_button=='Yes':
             qr_manager(id,shorturl,1)
 else:
     pass
-print ('there is nothing more to do here...')
+print ('there is nothing more to do here...')"""

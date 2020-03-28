@@ -3,7 +3,9 @@ import easygui
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtGui as qtg
 from PyQt5 import QtCore as qtc
-from guitemplate import Ui_MainWindow
+from GUI.guitemplate import Ui_MainWindow
+from scripts.refreshdatabase import *
+
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -20,7 +22,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.actionSalir.triggered.connect(self.close) #Boton Salir de la barra menu
         
         """Ventana principal"""
-
+        self.refresh_button.clicked.connect(self.refres_button_func)
 
         #End main UI code
         self.show
@@ -30,8 +32,8 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.xlsx_route_response_label.setText(route)
         #Verificar como obtener el return en la función principal si no guardar esto en un archivo temporal.... o ver de como copiar info de label
 
-    def routesearcher(self):
-        route=easygui.diropenbox()
+    def refres_button_func(self):
+        route=refreshdatabase().diropenbox()
         self.route_destiny_response_label.setText(route)
 
 if __name__=="__main__":
