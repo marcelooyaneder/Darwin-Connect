@@ -54,12 +54,12 @@ class refreshdatabase():
             pass
         return full_df,data,indexo,full_df_columns
 
-    def comparefiles(self,ID,info,option):  #option 1 for showroom, 0 files 
-        filename1 = f"temp/{ID}.txt"
+    def comparefiles(self,ID,info,option,pathway):  #option 1 for showroom, 0 files 
+        filename1 = f"{pathway}/temp/{ID}.txt"
         if option==1:
-            filename2= f"showroom_files/{ID}.txt"
+            filename2= f"{pathway}/showroom_files/{ID}.txt"
         elif option==0:
-            filename2= f"files/{ID}.txt"
+            filename2= f"{pathway}/files/{ID}.txt"
         os.makedirs(os.path.dirname(filename1), exist_ok=True)
         with open(filename1,'w') as fil:
             fil.write(str(info))
@@ -75,15 +75,15 @@ class refreshdatabase():
             os.makedirs(os.path.dirname(filename2), exist_ok=True)
             with open(filename2,'w') as fil:
                 fil.write(str(info))
-        shutil.rmtree('temp/', ignore_errors=False, onerror=None)
+        shutil.rmtree(f"{pathway}/temp", ignore_errors=False, onerror=None)
         return 
 
-    def infowriting(self,ID,info,option):  #option 1 for showroom, 0 files
+    def infowriting(self,ID,info,option,pathway):  #option 1 for showroom, 0 files
         try: 
             if option ==0:
-                filename = f"files/{ID}.txt" 
+                filename = f"{pathway}/files/{ID}.txt" 
             elif option==1:
-                filename = f"showroom_files/{ID}.txt" 
+                filename = f"{pathway}/showroom_files/{ID}.txt" 
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename,'w') as fil:
                 fil.write(str(info))
