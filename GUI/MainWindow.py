@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'guitemplate.ui'
+# Form implementation generated from reading ui file 'MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.0
 #
@@ -39,21 +39,6 @@ class Ui_MainWindow(object):
         self.route_destiny_response_label = QtWidgets.QLabel(self.pathwaysanswer)
         self.route_destiny_response_label.setText("")
         self.route_destiny_response_label.setObjectName("route_destiny_response_label")
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(380, 20, 271, 19))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.visitors_question = QtWidgets.QHBoxLayout(self.layoutWidget)
-        self.visitors_question.setContentsMargins(0, 0, 0, 0)
-        self.visitors_question.setObjectName("visitors_question")
-        self.question_1 = QtWidgets.QLabel(self.layoutWidget)
-        self.question_1.setObjectName("question_1")
-        self.visitors_question.addWidget(self.question_1)
-        self.question_1_pos_ans = QtWidgets.QRadioButton(self.layoutWidget)
-        self.question_1_pos_ans.setObjectName("question_1_pos_ans")
-        self.visitors_question.addWidget(self.question_1_pos_ans)
-        self.question_1_neg_ans = QtWidgets.QRadioButton(self.layoutWidget)
-        self.question_1_neg_ans.setObjectName("question_1_neg_ans")
-        self.visitors_question.addWidget(self.question_1_neg_ans)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 658, 21))
@@ -70,7 +55,11 @@ class Ui_MainWindow(object):
         self.actionOpen.setObjectName("actionOpen")
         self.actionSalir = QtWidgets.QAction(MainWindow)
         self.actionSalir.setObjectName("actionSalir")
+        self.actionDestino = QtWidgets.QAction(MainWindow)
+        self.actionDestino.setObjectName("actionDestino")
         self.menuFiles.addAction(self.actionOpen)
+        self.menuFiles.addAction(self.actionDestino)
+        self.menuFiles.addSeparator()
         self.menuFiles.addAction(self.actionSalir)
         self.menubar.addAction(self.menuFiles.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -86,10 +75,8 @@ class Ui_MainWindow(object):
         self.ettiquette_button.setText(_translate("MainWindow", "Etiquetado"))
         self.xlsx_route_label.setText(_translate("MainWindow", "Ruta archivo original:"))
         self.route_destiny_label.setText(_translate("MainWindow", "Ruta destino:"))
-        self.question_1.setText(_translate("MainWindow", "¿Deseas crear archivos para visitantes?"))
-        self.question_1_pos_ans.setText(_translate("MainWindow", "Si"))
-        self.question_1_neg_ans.setText(_translate("MainWindow", "No"))
         self.menuFiles.setTitle(_translate("MainWindow", "Archivos"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionOpen.setText(_translate("MainWindow", "Abrir"))
         self.actionSalir.setText(_translate("MainWindow", "Salir"))
+        self.actionDestino.setText(_translate("MainWindow", "Destino"))

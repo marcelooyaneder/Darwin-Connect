@@ -86,39 +86,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>20</y>
-      <width>271</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="visitors_question">
-     <item>
-      <widget class="QLabel" name="question_1">
-       <property name="text">
-        <string>¿Deseas crear archivos para visitantes?</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="question_1_pos_ans">
-       <property name="text">
-        <string>Si</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QRadioButton" name="question_1_neg_ans">
-       <property name="text">
-        <string>No</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -134,6 +101,8 @@
      <string>Archivos</string>
     </property>
     <addaction name="actionOpen"/>
+    <addaction name="actionDestino"/>
+    <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -153,6 +122,11 @@
   <action name="actionSalir">
    <property name="text">
     <string>Salir</string>
+   </property>
+  </action>
+  <action name="actionDestino">
+   <property name="text">
+    <string>Destino</string>
    </property>
   </action>
  </widget>
