@@ -10,13 +10,6 @@ from PIL import Image
 
 
 class refreshdatabase():
-    def diropenbox(self):
-        """esta funcion sera para encontrar el directorio o 
-        para crear un directorio que contendra todos los archivos"""
-        eg.msgbox(msg="Seleccione un directorio en el cual se guardaran los archivos creados.\nSi ya ha hecho este proceso con este archivo seleccione el mismo directorio",ok_button="Ok")
-        route_destiny_response_label=eg.diropenbox()
-        return route_destiny_response_label
-
     def file_organizer(self,route_response_label):
         try:
             file_path=route_response_label

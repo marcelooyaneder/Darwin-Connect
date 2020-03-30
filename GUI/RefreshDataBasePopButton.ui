@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RefreshDataBasePopButton</class>
+ <widget class="QWidget" name="RefreshDataBasePopButton">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>683</width>
+    <height>305</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>271</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="visitors_question">
+    <item>
+     <widget class="QLabel" name="question_1">
+      <property name="text">
+       <string>¿Deseas crear archivos para visitantes?</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="question_1_pos_ans">
+      <property name="text">
+       <string>Si</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="question_1_neg_ans">
+      <property name="text">
+       <string>No</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QSplitter" name="pathwaysanswer">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>140</y>
+     <width>611</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+   <widget class="QLabel" name="xlsx_route_label">
+    <property name="text">
+     <string>Ruta archivo original:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="xlsx_route_response_label">
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="route_destiny_label">
+    <property name="text">
+     <string>Ruta destino:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="route_destiny_response_label">
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>250</y>
+     <width>158</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="execute_button">
+      <property name="text">
+       <string>Refrescar!</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="exitbutton">
+      <property name="text">
+       <string>Salir</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
