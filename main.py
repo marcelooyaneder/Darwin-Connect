@@ -87,9 +87,14 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
             else:
                 for id in IDs:
                     refreshdatabase().infowriting(id,showroom_df.loc[id],"invited",self.route_destiny_response_label.text())
-        
         print ('there is nothing more to do here...')
-
+        #************************************************************************#
+        api_key=self.Firebase_key_ans.text()
+        sub_domain=self.Firebase_domain_ans.text()
+        GitHub_user=self.GitHub_user_ans.text()
+        GitHub_repo=self.GitHub_repository_ans.text()
+        qr_tools_class=qr_tools(api_key,sub_domain,GitHub_user,GitHub_repo,self.route_destiny_response_label.text(),IDs,"dwc_files")
+        qr_tools_class.qr_manager()
 
 
 if __name__=="__main__":
