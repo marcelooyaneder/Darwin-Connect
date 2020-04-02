@@ -68,23 +68,25 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
 
         if os.path.isdir(f"{self.route_destiny_response_label.text()}/files")==True:
             for id in IDs:
-                refreshdatabase().comparefiles(id,organized_df.loc[id],0,self.route_destiny_response_label.text())
+                refreshdatabase().comparefiles(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
         else:
             for id in IDs:
-                refreshdatabase().infowriting(id,organized_df.loc[id],0,self.route_destiny_response_label.text())
+                refreshdatabase().infowriting(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
         
-        """ SECCION PARA SHOWROOM
+        """SECCION PARA SHOWROOM"""
         if self.question_1_pos_ans.isChecked()==True:
             showroom_option_answer=True
         elif self.question_1_neg_ans.isChecked():
             showroom_option_answer=False
         if showroom_option_answer==True:
+            showroom_df=refreshdatabase().visitors_file_maker(full_df)
+            #aca va la funcion de organizacion de showroom
             if os.path.isdir(f'{self.route_destiny_response_label}\showroom_files')==True:
                 for id in IDs:
-                    refreshdatabase().comparefiles(id,data_showroom.loc[id],1)
+                    refreshdatabase().comparefiles(id,showroom_df.loc[id],"invited",self.route_destiny_response_label.text())
             else:
                 for id in IDs:
-                    refreshdatabase().infowriting(id,data_showroom.loc[id],1)"""
+                    refreshdatabase().infowriting(id,showroom_df.loc[id],"invited",self.route_destiny_response_label.text())
         
         print ('there is nothing more to do here...')
 

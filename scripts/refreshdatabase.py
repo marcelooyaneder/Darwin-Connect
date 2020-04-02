@@ -18,10 +18,10 @@ class refreshdatabase():
             elif file_path.endswith('.csv'):
                 data=pd.read_csv(file_path,header=0,sep=';') #ver como variar de ; o ,
         except:
-            print("no hemos podido encontrar la ruta del archivo excel")
+            print("No hemos podido encontrar la ruta del archivo Excel")
         columns_df=data.columns.tolist()
-        msg='select a column to be the index of the dataframe'
-        title='select index'       
+        msg="Seleccione una columna para ser el indice de la base de datos\n Este debe ser un valor unico para cada especimen"
+        title="Seleccion"       
         indexo=eg.choicebox(msg,title,columns_df)
         data=data.set_index(indexo, drop = True)
         full_df=data.copy()
@@ -31,8 +31,8 @@ class refreshdatabase():
         if not columns_difference:
             pass
         else:
-            msg='the followings columns do not belong to DwC, select the ones you wish to delete'
-            title='select to delete'       
+            msg="Las columnas a continuacion no se encuentran en nuestra base de datos de DwC\n Seleccione las que desee borrar"
+            title="Seleccion"      
             choicebox=eg.multchoicebox(msg,title,columns_difference)
             try:
                 for label in choicebox:
@@ -49,22 +49,22 @@ class refreshdatabase():
 
     def comparefiles(self,ID,info,option,pathway):  #option 1 for showroom, 0 files 
         filename1 = f"{pathway}/temp/{ID}.txt"
-        if option==1:
+        if option=="invited":
             filename2= f"{pathway}/showroom_files/{ID}.txt"
-        elif option==0:
+        elif option=="dwc_files":
             filename2= f"{pathway}/files/{ID}.txt"
         os.makedirs(os.path.dirname(filename1), exist_ok=True)
         with open(filename1,'w') as fil:
             fil.write(str(info))
         if os.path.isfile(filename2)==True:
             if filecmp.cmp(filename1,filename2)==False:
-                print(f'ive found some changes since the last time, on file... {ID}.txt')
-                print('changes has been saved')
+                print(f"He encontrado cambios desde la ultima vez, en el archivo... {ID}.txt")
+                print("Se han guardado los cambios")
                 shutil.move(filename1,filename2)
             else:
                 pass
         else:
-            print(f'a new entry has been found, file... {ID}.txt has been created.')
+            print(f"Se ha encontrado una nueva entrada,Se ha cread el archivo... {ID}.txt")
             os.makedirs(os.path.dirname(filename2), exist_ok=True)
             with open(filename2,'w') as fil:
                 fil.write(str(info))
@@ -73,9 +73,9 @@ class refreshdatabase():
 
     def infowriting(self,ID,info,option,pathway):  #option 1 for showroom, 0 files
         try: 
-            if option ==0:
+            if option =="dwc_files":
                 filename = f"{pathway}/files/{ID}.txt" 
-            elif option==1:
+            elif option=="invited":
                 filename = f"{pathway}/showroom_files/{ID}.txt" 
             os.makedirs(os.path.dirname(filename), exist_ok=True)
             with open(filename,'w') as fil:
@@ -122,6 +122,18 @@ class refreshdatabase():
         except:
             print(f'permission to write in {filename} has been denied...')
 
+    def visitors_file_maker(self,full_df): 
+        showroom_df=full_df.copy()
+        msg="Seleccione las columnas que desea mostrar a sus invitados"
+        title='Seleccion'
+        choicebox=eg.multchoicebox(msg,title,full_df.columns.tolist())
+        try:
+            showroom_df=showroom_df[choicebox]
+        except:
+            pass
+        pass
+        return showroom_df
+
 
 """#######################################
 ########FILE MANAGEMENT SECTION########
@@ -134,12 +146,12 @@ if file_mng_button=='Open a file':
     IDs=data.index.tolist() #no considerar para file_creation 
     showroom_option_button=eg.buttonbox(msg='do you wish to create files for a showroom',title='select a option',choices=['Yes','No'])
     if showroom_option_button=='Yes':
-        data_showroom=og_data.copy()
+        showroom_df=og_data.copy()
         msg='select the columns to keep on your showroom dataframe'
         title='select'
         choicebox=eg.multchoicebox(msg,title,og_columns_df)
         try:
-            data_showroom=data_showroom[choicebox]
+            showroom_df=showroom_df[choicebox]
         except:
             pass
     elif showroom_option_button=='No':
@@ -165,10 +177,10 @@ else:
 if showroom_option_button=='Yes':
     if os.path.isdir('showroom_files')==True:
         for id in IDs:
-            comparefiles(id,data_showroom.loc[id],1)
+            comparefiles(id,showroom_df.loc[id],1)
     else:
         for id in IDs:
-            infowriting(id,data_showroom.loc[id],1)
+            infowriting(id,showroom_df.loc[id],1)
 print ('there is nothing more to do here...')
 
 #compare qr files or create them
