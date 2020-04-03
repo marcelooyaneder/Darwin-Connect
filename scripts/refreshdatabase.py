@@ -143,23 +143,33 @@ class qr_tools():
             print(f'permission to write in {filename} has been denied...')
 
     def qr_manager(self):
-        if self.option=="dwc_file":
+        if self.option=="dwc_files":
             pathway=f"{self.path}/qrs"
         elif self.option=="invited":
             pathway=f"{self.path}/qrs_showroom"
-        if os.path.isdir(pathway)==True:
-            for id in self.IDs:
-                print(f'file {id} of file {self.IDs[-1]}',end='\r', flush=True)
-                image_path=f"{pathway}/{id}.png"
-                if os.path.isfile(image_path)==False:
+        try:
+            if os.path.isdir(pathway)==True:
+                for id in self.IDs:
+                    print(f'file {id} of file {self.IDs[-1]}',end='\r', flush=True)
+                    image_path=f"{pathway}/{id}.png"
+                    if os.path.isfile(image_path)==False:
+                        short_url=self.dynamiclinks(id)
+                        self.qr_creator(short_url,image_path)
+                    else:
+                        pass
+            else:
+                for id in self.IDs:
+                    print(f'file {id} of file {self.IDs[-1]}',end='\r', flush=True)
+                    image_path=f"{pathway}/{id}.png"
                     short_url=self.dynamiclinks(id)
                     self.qr_creator(short_url,image_path)
-                else:
-                    pass
-        else:
-            for id in self.IDs:
-                print(f'file {id} of file {self.IDs[-1]}',end='\r', flush=True)
-                image_path=f"{pathway}/{id}.png"
-                short_url=self.dynamiclinks(id)
-                self.qr_creator(short_url,image_path)
-                pass
+            if self.option=="dwc_files": 
+                print("Se han terminado de crear los codigos Qr que dirigen a tus archivos DwC")
+            elif self.option=="invited":
+                print("Se han terminado de crear los codigos Qr que dirigen a tus archivos de invitados")
+        except:
+            if self.option=="dwc_files":
+                print("Ha ocurrido un error en la creacion de los codigos Qr de DwC")
+            elif self.option=="invited":
+                print("Ha ocurrido un error en la creacion de los codigos Qr de invitados")
+
