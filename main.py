@@ -68,26 +68,40 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
 
         if os.path.isdir(f"{self.route_destiny_response_label.text()}/files")==True:
             for id in IDs:
-                refreshdatabase().comparefiles(id,organized_df.loc[id],0,self.route_destiny_response_label.text())
+                refreshdatabase().comparefiles(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
         else:
             for id in IDs:
-                refreshdatabase().infowriting(id,organized_df.loc[id],0,self.route_destiny_response_label.text())
+                refreshdatabase().infowriting(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
         
-        """ SECCION PARA SHOWROOM
+        """SECCION PARA SHOWROOM"""
         if self.question_1_pos_ans.isChecked()==True:
             showroom_option_answer=True
         elif self.question_1_neg_ans.isChecked():
             showroom_option_answer=False
         if showroom_option_answer==True:
+            showroom_df=refreshdatabase().visitors_file_maker(full_df)
+            #aca va la funcion de organizacion de showroom
             if os.path.isdir(f'{self.route_destiny_response_label}\showroom_files')==True:
                 for id in IDs:
-                    refreshdatabase().comparefiles(id,data_showroom.loc[id],1)
+                    refreshdatabase().comparefiles(id,showroom_df.loc[id],"invited",self.route_destiny_response_label.text())
             else:
                 for id in IDs:
-                    refreshdatabase().infowriting(id,data_showroom.loc[id],1)"""
-        
+                    refreshdatabase().infowriting(id,showroom_df.loc[id],"invited",self.route_destiny_response_label.text())
         print ('there is nothing more to do here...')
-
+        #************************************************************************#
+        print("Creando codigos Qr")
+        api_key=self.Firebase_key_ans.text()
+        sub_domain=self.Firebase_domain_ans.text()
+        GitHub_user=self.GitHub_user_ans.text()
+        GitHub_repo=self.GitHub_repository_ans.text()
+        qr_tools_class=qr_tools(api_key,sub_domain,GitHub_user,GitHub_repo,self.route_destiny_response_label.text(),IDs,"dwc_files")
+        qr_tools_class.qr_manager()
+        if showroom_option_answer==True:
+            qr_tools_class=qr_tools(api_key,sub_domain,GitHub_user,GitHub_repo,self.route_destiny_response_label.text(),IDs,"invited")
+            qr_tools_class.qr_manager()
+        else:
+            pass
+        
 
 
 if __name__=="__main__":

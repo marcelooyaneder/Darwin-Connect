@@ -50,7 +50,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>140</y>
+     <y>170</y>
      <width>611</width>
      <height>71</height>
     </rect>
@@ -79,7 +79,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -102,6 +102,58 @@
        <string>Salir</string>
       </property>
      </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>52</y>
+     <width>401</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="GitHub_user">
+      <property name="text">
+       <string>Usuario de GitHub</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="GitHub_user_ans"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="GitHub_repository">
+      <property name="text">
+       <string>Repositorio en GitHub</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="GitHub_repository_ans"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="Firebase_domain">
+      <property name="text">
+       <string>Dominio en Firebase</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="Firebase_domain_ans"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="Firebase_key">
+      <property name="text">
+       <string>Clave en Firesabe</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="Firebase_key_ans"/>
     </item>
    </layout>
   </widget>
