@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 import easygui as eg
 import pandas as pd
@@ -31,7 +34,7 @@ class refreshdatabase():
         if not columns_difference:
             pass
         else:
-            msg="Las columnas a continuacion no se encuentran en nuestra base de datos de DwC\n Seleccione las que desee borrar"
+            msg="Las columnas a continuacion no se encuentran en nuestra base de datos de DwC\n\Seleccione las que desee borrar"
             title="Seleccion"      
             choicebox=eg.multchoicebox(msg,title,columns_difference)
             try:
@@ -42,7 +45,6 @@ class refreshdatabase():
         try:
             data.dropna(axis=1, how='all',inplace=True)
             full_df.dropna(axis=1, how='all',inplace=True)
-            #full_df.to_csv('online_dataframe.csv',sep=',')
         except:
             pass
         return full_df,data,indexo,full_df_columns
@@ -96,6 +98,14 @@ class refreshdatabase():
             pass
         pass
         return showroom_df
+        
+    def df_to_csv(self,dataframe,pathway):
+        if not os.path.exists(f"{pathway}/csv/"):
+            os.makedirs(f"{pathway}/csv/")
+        else:    
+            pass
+        file_pathway=f"{pathway}/csv/full_df.csv"
+        dataframe.to_csv(file_pathway,sep=",",encoding="utf-8")
 
 class qr_tools():
     def __init__(self,api_key,sub_domain,GitHub_user,GitHub_repo,path,IDs,option):
