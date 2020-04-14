@@ -3,6 +3,7 @@
 
 import sys
 import easygui
+import pandas as pd
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtGui as qtg
 from PyQt5 import QtCore as qtc
@@ -113,27 +114,27 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         refreshdatabase().df_to_csv(full_df,self.DestinyPathway) #save full_df to a csv
 
 class StatsButton(qtw.QWidget,Ui_StatsPopButton):
-    def __init__(self,DestinyPathWay):
+    def __init__(self,DestinyPathWay,stat_df=pd.DataFrame()):
         """MainWindow Constructor"""
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("Darwin Connect")
         # Var Definitions
         self.DestinyPathway=DestinyPathWay
+        self.stat_df=stat_df
         #Read df
-        stat_df=pd.read_csv(f"{DestinyPathWay}/csv/full_df.csv",header=0,sep=';')
+        self.stat_df=pd.read_csv(f"{DestinyPathWay}/csv/full_df.csv",header=0,sep=',')
         # Main UI code goes here
         self.route_destiny_response_label.setText(DestinyPathWay)
         self.graphbutton.clicked.connect(lambda: self.graph_button_func())
         self.exitbutton.clicked.connect(self.close)
         #Populate ComboBox
-        self.dwc_label_response.addItems(stat_df.columns.tolist())
-        #self.dwc_label_response.itemText() label response
+        self.dwc_label_response.addItems(self.stat_df.columns.tolist())
         #End main UI code
         self.show()
     
     def graph_button_func(self):
-        graph_and_stats().make_graph(self.stat_df,self.dwc_label_response.itemText(),self.graph_kind_response.itemText(),self.graph_title_response.text(),self.graph_size_response_x.text(),self.graph_size_response_x.text())
+        dwc_graph().make_graph(self.stat_df,self.dwc_label_response.currentText(),self.graph_kind_response.currentText(),self.graph_title_response.text(),self.graph_size_response_x.text(),self.graph_size_response_y.text())
 
 
 if __name__=="__main__":
