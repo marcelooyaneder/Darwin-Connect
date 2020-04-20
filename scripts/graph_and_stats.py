@@ -21,8 +21,16 @@ class dwc_graph():
         else:
             pass
         if figsize_x=="" or figsize_y=="":
-            dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title)
+            if bar_kind=="pie":
+                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title, autopct='%1.1f%%')
+            else:
+                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title)
+            plt.tight_layout()
             plt.show()
         else:
-            dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title,figsize=(figsize_x,figsize_y))
+            if bar_kind=="pie":
+                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title,figsize=(figsize_x,figsize_y), autopct='%1.1f%%')
+            else:
+                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title,figsize=(figsize_x,figsize_y))
+            plt.tight_layout()
             plt.show()
