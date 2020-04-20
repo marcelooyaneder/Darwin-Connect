@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Estadisticas</string>
+     <string>Gráficos</string>
     </property>
    </widget>
    <widget class="QPushButton" name="ettiquette_button">

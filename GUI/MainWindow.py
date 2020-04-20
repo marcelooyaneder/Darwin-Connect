@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.0
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -71,7 +71,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.refresh_button.setText(_translate("MainWindow", "Refrescar base de datos"))
-        self.stats_button.setText(_translate("MainWindow", "Estadisticas"))
+        self.stats_button.setText(_translate("MainWindow", "Gráficos"))
         self.ettiquette_button.setText(_translate("MainWindow", "Etiquetado"))
         self.xlsx_route_label.setText(_translate("MainWindow", "Ruta archivo original:"))
         self.route_destiny_label.setText(_translate("MainWindow", "Ruta destino:"))

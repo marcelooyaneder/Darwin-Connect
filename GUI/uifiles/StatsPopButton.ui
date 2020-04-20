@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>716</width>
-    <height>398</height>
+    <width>681</width>
+    <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,24 +23,20 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="dwc_label">
+    <item row="2" column="1" colspan="2">
+     <widget class="QLineEdit" name="graph_title_response"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="graph_title">
       <property name="text">
-       <string>Etiquetas disponibles</string>
+       <string>Titulo del gráfico</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="2" colspan="2">
+    <item row="0" column="1" colspan="2">
      <widget class="QComboBox" name="dwc_label_response"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="graph_kind">
-      <property name="text">
-       <string>Tipo de gráfico</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2" colspan="2">
+    <item row="1" column="1" colspan="2">
      <widget class="QComboBox" name="graph_kind_response">
       <item>
        <property name="text">
@@ -59,28 +55,19 @@
       </item>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="graph_title">
+    <item row="1" column="0">
+     <widget class="QLabel" name="graph_kind">
       <property name="text">
-       <string>Titulo del gráfico</string>
+       <string>Tipo de gráfico</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QLabel" name="graph_size">
+    <item row="0" column="0">
+     <widget class="QLabel" name="dwc_label">
       <property name="text">
-       <string>Tamaño del gráfico x,y</string>
+       <string>Etiquetas disponibles</string>
       </property>
      </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QLineEdit" name="graph_size_response_x"/>
-    </item>
-    <item row="3" column="3">
-     <widget class="QLineEdit" name="graph_size_response_y"/>
-    </item>
-    <item row="2" column="2" colspan="2">
-     <widget class="QLineEdit" name="graph_title_response"/>
     </item>
    </layout>
   </widget>
@@ -88,7 +75,7 @@
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>330</y>
+     <y>220</y>
      <width>150</width>
      <height>23</height>
     </rect>
@@ -111,7 +98,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>270</y>
+     <y>160</y>
      <width>571</width>
      <height>41</height>
     </rect>
