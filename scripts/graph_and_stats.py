@@ -9,28 +9,17 @@ class dwc_graph():
     def __init__(self):
         super().__init__()
 
-    def make_graph(self,dataframe,label,bar_kind,graph_title,figsize_x,figsize_y):
+    def make_graph(self,dataframe,label,bar_kind,graph_title):
         #Tipos de gráficos a diccionario y obtenerlas con método get
         bar_kind_dict={"Barras":"bar",
         "Barras horizontales":"barh",
         "Torta":"pie"
         }
         bar_kind=bar_kind_dict.get(bar_kind)
-        if graph_title=="":
-            graph_title=f"{label}"
+        if graph_title=="": graph_title=f"{label}"
+        if bar_kind=="pie":
+            dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title, autopct='%1.1f%%')
         else:
-            pass
-        if figsize_x=="" or figsize_y=="":
-            if bar_kind=="pie":
-                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title, autopct='%1.1f%%')
-            else:
-                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title)
-            plt.tight_layout()
-            plt.show()
-        else:
-            if bar_kind=="pie":
-                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title,figsize=(figsize_x,figsize_y), autopct='%1.1f%%')
-            else:
-                dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title,figsize=(figsize_x,figsize_y))
-            plt.tight_layout()
-            plt.show()
+            dataframe[label].value_counts().plot(kind=bar_kind,title=graph_title)
+        plt.tight_layout()
+        plt.show()

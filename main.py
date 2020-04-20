@@ -134,7 +134,7 @@ class StatsButton(qtw.QWidget,Ui_StatsPopButton):
         self.show()
     
     def graph_button_func(self):
-        dwc_graph().make_graph(self.stat_df,self.dwc_label_response.currentText(),self.graph_kind_response.currentText(),self.graph_title_response.text(),self.graph_size_response_x.text(),self.graph_size_response_y.text())
+        dwc_graph().make_graph(self.stat_df,self.dwc_label_response.currentText(),self.graph_kind_response.currentText(),self.graph_title_response.text())
 
 
 if __name__=="__main__":
