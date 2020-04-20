@@ -3,3 +3,4 @@ Darwin-Connect/scripts/__pycache__/
 project_darwin_connect/
 
 .vscode/settings.json
+*.pyc
