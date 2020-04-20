@@ -1,4 +1,4 @@
-
+project_darwin_connect/
 *.json
 project_darwin_connect/Lib/site-packages/__pycache__/cycler.cpython-38.pyc
 project_darwin_connect/Lib/site-packages/__pycache__/easy_install.cpython-38.pyc
