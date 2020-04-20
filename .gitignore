@@ -1,2 +1,5 @@
+Darwin-Connect/GUI/__pycache__/
+Darwin-Connect/scripts/__pycache__/
 project_darwin_connect/
-*.json
+
+.vscode/settings.json
