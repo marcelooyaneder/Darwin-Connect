@@ -1,6 +1,6 @@
 Darwin-Connect/GUI/__pycache__/
 Darwin-Connect/scripts/__pycache__/
 project_darwin_connect/
-
+test/
 .vscode/settings.json
 *.pyc
