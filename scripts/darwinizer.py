@@ -45,8 +45,10 @@ class file_entry():
         for verbatimFieldName in dataframe_columns:
             for stdFieldName in dwc_terms_keys:
                 if verbatimFieldName in dwc_terms.get(stdFieldName):
-                    darwinizer_list.append((verbatimFieldName,stdFieldName))
-                    print(f"match on {stdFieldName}") #Guardar tupla de los match, para luego que el usuario seleccione
+                    darwinizer_list.append((verbatimFieldName,stdFieldName)) #tupla del match
+                    
+    def sensitive_data(self):
+        pass
 
       
 #Visitors va a seguir quedando en script refresh data base

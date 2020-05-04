@@ -72,6 +72,14 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
     
     def refresh_button_func(self):
         route=self.route_destiny_response_label.text() #Ruta de destino de archivos 
+        """
+        try:
+            open csv para full df y filtrar las columnas de dwc seleccionadas
+        except:
+            full_df,organized_df,index,full_df_columns=refreshdatabase().file_organizer(self.xlsx_route_response_label.text()) #Abrir archivo excel, organized_df just dwc values
+            Arreglar los problemas de las variables no usadas...
+            Recordar que es recomendable darwinizar nuestro archivo primero....
+            """
         full_df,organized_df,index,full_df_columns=refreshdatabase().file_organizer(self.xlsx_route_response_label.text()) #Abrir archivo excel, organized_df just dwc values
         IDs=organized_df.index.tolist() #no considerar para file_creation 
         print('compare/create files...')
