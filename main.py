@@ -10,8 +10,10 @@ from PyQt5 import QtCore as qtc
 from GUI.MainWindow import Ui_MainWindow
 from GUI.RefreshDataBasePopButton import Ui_RefreshDataBasePopButton
 from GUI.StatsPopButton import Ui_StatsPopButton
+from GUI.DarwinizerPopButton import Ui_Darwinizer
 from scripts.refreshdatabase import *
 from scripts.graph_and_stats import *
+from scripts.darwinizer import *
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -31,6 +33,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         """Ventana principal"""
         self.refresh_button.clicked.connect(lambda: self.refresh_button_UI())
         self.stats_button.clicked.connect(self.stats_button_UI)
+        self.darwinizer_button.clicked.connect(self.darwinizer_button_UI)
 
         #End main UI code
         self.show
@@ -51,6 +54,10 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
 
     def stats_button_UI(self):
         self.build=StatsButton(self.route_destiny_response_label.text())
+        self.build.show()
+
+    def darwinizer_button_UI(self):
+        self.build=DarwinizerButton(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text())
         self.build.show()
 
 class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
@@ -144,6 +151,33 @@ class StatsButton(qtw.QWidget,Ui_StatsPopButton):
     def graph_button_func(self):
         dwc_graph().make_graph(self.stat_df,self.dwc_label_response.currentText(),self.graph_kind_response.currentText(),self.graph_title_response.text())
 
+class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
+    def __init__(self,OriginPathWay,DestinyPathWay):
+        """MainWindow constructor"""
+        super().__init__()
+        self.setupUi(self)
+        self.setWindowTitle("Darwin Connect")
+        self.listWidget.setSelectionMode(qtw.QAbstractItemView.ExtendedSelection)
+        # Var Definitions
+        self.OriginPathWay=OriginPathWay
+        self.DestinyPathway=DestinyPathWay
+        # Main UI code goes here
+        self.xlsx_route_response_label.setText(OriginPathWay)
+        self.route_destiny_response_label.setText(DestinyPathWay)
+        #self.exitbutton.clicked.connect(self.close)
+        self.analyze_button.clicked.connect(lambda: self.darwin_analyzer())
+        
+        #End main UI code
+        self.show()
+    
+    def darwin_analyzer(self):
+        darwinizerClass=file_entry(self.OriginPathWay)
+        full_dataframe,darwinizer_list=darwinizerClass.darwinizer()
+        list_widget=[]
+        for verbatim,standard in darwinizer_list:
+            list_widget.append(f"{verbatim} -> {standard}")
+        self.listWidget.addItems(list_widget)
+        self.ReadyButton.clicked.connect(lambda: print([x.row() for x in self.listWidget.selectedIndexes()]))
 
 if __name__=="__main__":
     app=qtw.QApplication(sys.argv)

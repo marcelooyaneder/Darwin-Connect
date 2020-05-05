@@ -15,7 +15,7 @@ class file_entry():
         with open(dict_path , 'rb') as dict_file:
             return pickle.load(dict_file)
 
-    def file_opener(self,route_response_label): #Apertura del archivo, con el index correcto, se borran columnas sin datos
+    def file_opener(self): #Apertura del archivo, con el index correcto, se borran columnas sin datos
         try:
             file_path=self.route_response_label
             if file_path.endswith('.xlsx') or file_path.endswith('.xls'):
@@ -28,7 +28,7 @@ class file_entry():
         msg="Seleccione una columna para ser el indice de la base de datos\n Este debe ser un valor unico para cada especimen"
         title="Seleccion"       
         indexo=eg.choicebox(msg,title,columns_df)
-        data=data.set_index(indexo, drop = True)
+        data=data.set_index(indexo, drop = True) #solucionar la transformación de index
         try:
             data.dropna(axis=1, how='all',inplace=True)
         except:
@@ -36,8 +36,8 @@ class file_entry():
         return data
 
     def darwinizer(self):
-        dataframe= #proveniente de la funcion file opener
-        dwc_terms= #proveniente de funcion dict_loader
+        dataframe=self.file_opener() #proveniente de la funcion file opener
+        dwc_terms=self.dict_loader() #proveniente de funcion dict_loader
         dwc_terms_keys=dwc_terms.keys()
         dataframe_columns=dataframe.columns.tolist()
         darwinizer_list=[] #generar una lista que contenga tuplas verbatimFieldName,stdFieldName
@@ -46,7 +46,14 @@ class file_entry():
             for stdFieldName in dwc_terms_keys:
                 if verbatimFieldName in dwc_terms.get(stdFieldName):
                     darwinizer_list.append((verbatimFieldName,stdFieldName)) #tupla del match
-                    
+        return dataframe,darwinizer_list
+
+    def dataframe_label_transformer(self):
+        pass
+
+    def dwc_label_checker(self):
+        pass
+
     def sensitive_data(self):
         pass
 

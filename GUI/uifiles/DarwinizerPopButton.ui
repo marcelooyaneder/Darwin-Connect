@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Darwinizer</class>
+ <widget class="QWidget" name="Darwinizer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>718</width>
+    <height>509</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>351</width>
+     <height>311</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>331</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Recomendamos los siguientes cambios, seleccione los que NO desee:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ReadyButton">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>50</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Listo!</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="xlsx_route_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>372</y>
+     <width>611</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ruta archivo original:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="xlsx_route_response_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>391</y>
+     <width>611</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="route_destiny_response_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>429</y>
+     <width>611</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="route_destiny_label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>410</y>
+     <width>611</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Ruta destino:</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="analyze_button">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>90</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Analizar</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
