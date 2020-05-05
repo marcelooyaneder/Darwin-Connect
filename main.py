@@ -177,7 +177,7 @@ class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
         for verbatim,standard in darwinizer_list:
             list_widget.append(f"{verbatim} -> {standard}")
         self.listWidget.addItems(list_widget)
-        self.ReadyButton.clicked.connect(lambda: print([x.row() for x in self.listWidget.selectedIndexes()]))
+        self.ReadyButton.clicked.connect(lambda: darwinizerClass.dataframe_label_transformer(full_dataframe,self.listWidget,darwinizer_list))
 
 if __name__=="__main__":
     app=qtw.QApplication(sys.argv)

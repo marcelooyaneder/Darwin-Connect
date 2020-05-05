@@ -4,6 +4,7 @@
 import pickle
 import pandas as pd
 import easygui as eg
+from collections import defaultdict
 
 
 class file_entry():
@@ -24,11 +25,6 @@ class file_entry():
                 data=pd.read_csv(file_path,header=0,sep=';') #ver como variar de ; o ,
         except:
             print("No hemos podido encontrar la ruta del archivo Excel")
-        columns_df=data.columns.tolist()
-        msg="Seleccione una columna para ser el indice de la base de datos\n Este debe ser un valor unico para cada especimen"
-        title="Seleccion"       
-        indexo=eg.choicebox(msg,title,columns_df)
-        data=data.set_index(indexo, drop = True) #solucionar la transformación de index
         try:
             data.dropna(axis=1, how='all',inplace=True)
         except:
@@ -48,8 +44,29 @@ class file_entry():
                     darwinizer_list.append((verbatimFieldName,stdFieldName)) #tupla del match
         return dataframe,darwinizer_list
 
-    def dataframe_label_transformer(self):
-        pass
+    def set_df_index(self,data):
+        columns_df=data.columns.tolist()
+        msg="Seleccione una columna para ser el indice de la base de datos\n Este debe ser un valor unico para cada especimen"
+        title="Seleccion"       
+        indexo=eg.choicebox(msg,title,columns_df)
+        data=data.set_index(indexo, drop = True)
+        return data 
+
+    def dataframe_label_transformer(self,data,listWidget,darwinizer_list):
+        column_dict=defaultdict()
+        selected_indexes=[x.row() for x in listWidget.selectedIndexes()]
+        if not selected_indexes: 
+            column_dict=dict(darwinizer_list)
+        else:
+            i=0
+            while i<=len(darwinizer_list)-1:
+                if i not in selected_indexes:
+                    column_dict[darwinizer_list[i][0]]=darwinizer_list[i][1]  #Fix this  method not proud of it
+                else: pass        
+                i=i+1
+        data=data.rename(columns=column_dict)
+        print (data)
+        #return data
 
     def dwc_label_checker(self):
         pass
