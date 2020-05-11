@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>509</height>
+    <width>628</width>
+    <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,14 +33,14 @@
     </rect>
    </property>
    <property name="text">
-    <string>Recomendamos los siguientes cambios, seleccione los que NO desee:</string>
+    <string>Recomendamos lo siguiente, seleccione los que NO desee:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="ReadyButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>50</y>
+     <x>90</x>
+     <y>370</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>372</y>
+     <y>422</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -66,7 +66,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>391</y>
+     <y>441</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -79,7 +79,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>429</y>
+     <y>479</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -92,7 +92,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>460</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -104,14 +104,53 @@
   <widget class="QPushButton" name="analyze_button">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>90</y>
+     <x>10</x>
+     <y>370</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Analizar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DarwinizerButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>40</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Darwinizer</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DwCButton">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>60</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Etiquetas DwC</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="SelectAllButton">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>370</y>
+     <width>92</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Seleccionar todos</string>
    </property>
   </widget>
  </widget>
