@@ -1,18 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import pickle
 import pandas as pd
 import easygui as eg
 from collections import defaultdict
+from PyQt5 import QtCore as qtc
 
 
 class file_entry():
-    def __init__(self,route_response_label):
+    def __init__(self,route_response_label,route_destiny_label):
         self.route_response_label=route_response_label
+        self.route_destiny_label=route_destiny_label
+        self.dwc_terms=self.dict_loader() #Diccionario 
 
     def dict_loader(self): #Apertura del dict
-        dict_path="documents\dwc_terms\dwc_fieldName_dict.pkl"
+        dict_path=r"documents\dwc_terms\dwc_fieldName_dict.pkl"
         with open(dict_path , 'rb') as dict_file:
             return pickle.load(dict_file)
 
@@ -31,16 +35,15 @@ class file_entry():
             pass
         return data
 
-    def darwinizer(self):
+    def darwinizer(self):  #Encuentra match entre el df y el diccionario
         dataframe=self.file_opener() #proveniente de la funcion file opener
-        dwc_terms=self.dict_loader() #proveniente de funcion dict_loader
-        dwc_terms_keys=dwc_terms.keys()
+        dwc_terms_keys=self.dwc_terms.keys()
         dataframe_columns=dataframe.columns.tolist()
         darwinizer_list=[] #generar una lista que contenga tuplas verbatimFieldName,stdFieldName
         #iterador para encontrar tuplas verbatimFieldName,stdFieldName
         for verbatimFieldName in dataframe_columns:
             for stdFieldName in dwc_terms_keys:
-                if verbatimFieldName in dwc_terms.get(stdFieldName):
+                if verbatimFieldName in self.dwc_terms.get(stdFieldName):
                     darwinizer_list.append((verbatimFieldName,stdFieldName)) #tupla del match
         return dataframe,darwinizer_list
 
@@ -65,12 +68,46 @@ class file_entry():
                 else: pass        
                 i=i+1
         data=data.rename(columns=column_dict)
-        print (data)
+        os.makedirs(os.path.dirname(f"{self.route_destiny_label}\dwc_terms\df_column_dict_rename.pkl"), exist_ok=True)
+        f = open(f"{self.route_destiny_label}\dwc_terms\df_column_dict_rename.pkl","wb")
+        pickle.dump(column_dict,f)
+        f.close()
+        os.makedirs(os.path.dirname(f"{self.route_destiny_label}\dwc_terms\df_columns_renamed.pkl"), exist_ok=True)
+        f = open(f"{self.route_destiny_label}\dwc_terms\df_columns_renamed.pkl","wb")
+        pickle.dump(data.columns.tolist(),f)
+        f.close()
+        listWidget.clear()
         #return data
 
-    def dwc_label_checker(self):
-        pass
+    def dwc_label_checker(self,listWidget):
+        with open(f"{self.route_destiny_label}\dwc_terms\df_columns_renamed.pkl", 'rb') as f:
+            df_columns = pickle.load(f)
+        not_recommended_labels=[]
+        for labels in df_columns:
+            if labels not in self.dwc_terms.keys():
+                not_recommended_labels.append(labels)
+        listWidget.addItems(df_columns)
+        for i in not_recommended_labels:
+            matching_items = listWidget.findItems(i, qtc.Qt.MatchExactly)
+            for item in matching_items:
+                item.setSelected(True)
+        return df_columns
 
+    
+    def dwc_label_transformer(self,listWidget,df_columns):
+        selected_indexes=[x.row() for x in listWidget.selectedIndexes()]
+        df_selected_dwc_labels=[]
+        i=0
+        while i <= len(df_columns)-1:
+            if i not in selected_indexes:
+                df_selected_dwc_labels.append(df_columns[i])
+            i=i+1
+        os.makedirs(os.path.dirname(f"{self.route_destiny_label}\dwc_terms\df_selected_dwc_labels.pkl"), exist_ok=True)
+        f = open(f"{self.route_destiny_label}\dwc_terms\df_selected_dwc_labels.pkl","wb")
+        pickle.dump(df_selected_dwc_labels,f)
+        f.close()
+        listWidget.clear()
+    
     def sensitive_data(self):
         pass
 

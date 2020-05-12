@@ -161,23 +161,29 @@ class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
         # Var Definitions
         self.OriginPathWay=OriginPathWay
         self.DestinyPathway=DestinyPathWay
+        self.darwinizerClass=file_entry(self.OriginPathWay,self.DestinyPathway)
         # Main UI code goes here
         self.xlsx_route_response_label.setText(OriginPathWay)
         self.route_destiny_response_label.setText(DestinyPathWay)
         #self.exitbutton.clicked.connect(self.close)
-        self.analyze_button.clicked.connect(lambda: self.darwin_analyzer())
-        
+        self.DarwinizerButton.clicked.connect(lambda: self.darwin_analyzer())
+        self.DwCButton.clicked.connect(lambda: self.dwc_label_selecter())
+
         #End main UI code
         self.show()
     
     def darwin_analyzer(self):
-        darwinizerClass=file_entry(self.OriginPathWay)
-        full_dataframe,darwinizer_list=darwinizerClass.darwinizer()
+        self.listWidget.clear()
+        full_dataframe,darwinizer_list=self.darwinizerClass.darwinizer()
         list_widget=[]
         for verbatim,standard in darwinizer_list:
             list_widget.append(f"{verbatim} -> {standard}")
         self.listWidget.addItems(list_widget)
-        self.ReadyButton.clicked.connect(lambda: darwinizerClass.dataframe_label_transformer(full_dataframe,self.listWidget,darwinizer_list))
+        self.ReadyButton.clicked.connect(lambda: self.darwinizerClass.dataframe_label_transformer(full_dataframe,self.listWidget,darwinizer_list))
+
+    def dwc_label_selecter(self):
+        df_columns=self.darwinizerClass.dwc_label_checker(self.listWidget)
+        self.ReadyButton.clicked.connect(lambda: self.darwinizerClass.dwc_label_transformer(self.listWidget,df_columns)) 
 
 if __name__=="__main__":
     app=qtw.QApplication(sys.argv)

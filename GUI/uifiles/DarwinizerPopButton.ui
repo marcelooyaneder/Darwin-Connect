@@ -39,7 +39,7 @@
   <widget class="QPushButton" name="ReadyButton">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>110</x>
      <y>370</y>
      <width>75</width>
      <height>23</height>
@@ -101,19 +101,6 @@
     <string>Ruta destino:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="analyze_button">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>370</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Analizar</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="DarwinizerButton">
    <property name="geometry">
     <rect>
@@ -143,7 +130,7 @@
   <widget class="QPushButton" name="SelectAllButton">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>10</x>
      <y>370</y>
      <width>92</width>
      <height>23</height>
