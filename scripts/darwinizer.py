@@ -77,11 +77,6 @@ class file_entry():
         pickle.dump(data.columns.tolist(),f)
         f.close()
         listWidget.clear()
-        print("*************************************************")
-        print(selected_indexes)
-        print(column_dict)
-        print(data.columns.tolist())
-        print("*************************************************")
         #return data
 
     def dwc_label_checker(self,listWidget):
