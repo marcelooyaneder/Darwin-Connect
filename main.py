@@ -78,19 +78,9 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         self.show()
     
     def refresh_button_func(self):
-        route=self.route_destiny_response_label.text() #Ruta de destino de archivos 
-        """
-        try:
-            open csv para full df y filtrar las columnas de dwc seleccionadas
-        except:
-            full_df,organized_df,index,full_df_columns=refreshdatabase().file_organizer(self.xlsx_route_response_label.text()) #Abrir archivo excel, organized_df just dwc values
-            Arreglar los problemas de las variables no usadas...
-            Recordar que es recomendable darwinizar nuestro archivo primero....
-            """
-        full_df,organized_df,index,full_df_columns=refreshdatabase().file_organizer(self.xlsx_route_response_label.text()) #Abrir archivo excel, organized_df just dwc values
-        IDs=organized_df.index.tolist() #no considerar para file_creation 
+        full_df,organized_df=refreshdatabase().file_organizer(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text()) #Abrir archivo excel, organized_df just dwc values
+        IDs=organized_df.index.tolist()
         print('compare/create files...')
-
         if os.path.isdir(f"{self.route_destiny_response_label.text()}/files")==True:
             for id in IDs:
                 refreshdatabase().comparefiles(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
@@ -183,7 +173,7 @@ class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
 
     def dwc_label_selecter(self):
         df_columns=self.darwinizerClass.dwc_label_checker(self.listWidget)
-        self.ReadyButton.clicked.connect(lambda: self.darwinizerClass.dwc_label_transformer(self.listWidget,df_columns)) 
+        self.ReadyButton_2.clicked.connect(lambda: self.darwinizerClass.dwc_label_transformer(self.listWidget,df_columns)) 
 
 if __name__=="__main__":
     app=qtw.QApplication(sys.argv)

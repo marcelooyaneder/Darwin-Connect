@@ -10,10 +10,10 @@ from python_firebase_url_shortener.url_shortener import UrlShortener
 import time
 import pyqrcode
 from PIL import Image
-
+import pickle
 
 class refreshdatabase():
-    def file_organizer(self,route_response_label):
+    def file_organizer(self,route_response_label,route_destiny_label):
         try:
             file_path=route_response_label
             if file_path.endswith('.xlsx') or file_path.endswith('.xls'):
@@ -22,32 +22,27 @@ class refreshdatabase():
                 data=pd.read_csv(file_path,header=0,sep=';') #ver como variar de ; o ,
         except:
             print("No hemos podido encontrar la ruta del archivo Excel")
-        columns_df=data.columns.tolist()
+        #OPEN DICT CREATED ON DARWINIZER TO RENAME DF COLUMNS
+        try:
+            with open(f"{route_destiny_label}\dwc_terms\df_column_dict_rename.pkl", "rb") as input_file:
+                df_column_dict_rename= pickle.load(input_file)
+        except:
+            print("Por favor primero ir a la sección darwinizer")
+        #OPEN DWC SELECTED COLUMNS ON DARWINIZER
+        try:
+            with open(f"{route_destiny_label}\dwc_terms\df_selected_dwc_labels.pkl", "rb") as input_file:
+                df_selected_dwc_labels= pickle.load(input_file)
+        except:
+            print("Por favor primero ir a la sección darwinizer")
+        #
+        data=data.rename(columns=df_column_dict_rename)
+        dwc_df=data[df_selected_dwc_labels]
         msg="Seleccione una columna para ser el indice de la base de datos\n Este debe ser un valor unico para cada especimen"
         title="Seleccion"       
-        indexo=eg.choicebox(msg,title,columns_df)
+        indexo=eg.choicebox(msg,title,data.columns.tolist())
         data=data.set_index(indexo, drop = True)
-        full_df=data.copy()
-        full_df_columns=full_df.columns.tolist()
-        columns_dwc=pd.read_csv('documents\dwc_terms\simple_dwc_horizontal.csv',header=0,sep=';').columns.tolist() #ver como variar de ; o , 
-        columns_difference=list(set(columns_df)-set(columns_dwc))
-        if not columns_difference:
-            pass
-        else:
-            msg="Las columnas a continuacion no se encuentran en nuestra base de datos de DwC\n\Seleccione las que desee borrar"
-            title="Seleccion"      
-            choicebox=eg.multchoicebox(msg,title,columns_difference)
-            try:
-                for label in choicebox:
-                    data.drop(label,axis=1,inplace=True)
-            except:
-                pass
-        try:
-            data.dropna(axis=1, how='all',inplace=True)
-            full_df.dropna(axis=1, how='all',inplace=True)
-        except:
-            pass
-        return full_df,data,indexo,full_df_columns
+        dwc_df=dwc_df.set_index(indexo, drop = True)
+        return data,dwc_df
 
     def comparefiles(self,ID,info,option,pathway):  #option invited, dwc_files
         filename1 = f"{pathway}/temp/{ID}.txt"
