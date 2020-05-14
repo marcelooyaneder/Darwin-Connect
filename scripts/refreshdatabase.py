@@ -82,11 +82,10 @@ class refreshdatabase():
             print(f'permission to write in {filename} has been denied...')
         return 
 
-    def visitors_file_maker(self,full_df): 
+    def visitors_file_maker(self,full_df,route_destiny_label): 
         showroom_df=full_df.copy()
-        msg="Seleccione las columnas que desea mostrar a sus invitados"
-        title='Seleccion'
-        choicebox=eg.multchoicebox(msg,title,full_df.columns.tolist())
+        with open(f"{route_destiny_label}\dwc_terms\df_selected_visitors_labels.pkl", 'rb') as f:
+            choicebox = pickle.load(f)
         try:
             showroom_df=showroom_df[choicebox]
         except:

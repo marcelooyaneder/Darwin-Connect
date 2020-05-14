@@ -94,7 +94,7 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         elif self.question_1_neg_ans.isChecked():
             showroom_option_answer=False
         if showroom_option_answer==True:
-            showroom_df=refreshdatabase().visitors_file_maker(full_df)
+            showroom_df=refreshdatabase().visitors_file_maker(full_df,self.route_destiny_response_label.text())
             #aca va la funcion de organizacion de showroom
             if os.path.isdir(f'{self.route_destiny_response_label}\showroom_files')==True:
                 for id in IDs:
@@ -158,7 +158,7 @@ class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
         #self.exitbutton.clicked.connect(self.close)
         self.DarwinizerButton.clicked.connect(lambda: self.darwin_analyzer())
         self.DwCButton.clicked.connect(lambda: self.dwc_label_selecter())
-
+        self.VisitorsButton.clicked.connect(lambda: self.visitors_label_selecter())
         #End main UI code
         self.show()
     
@@ -174,6 +174,11 @@ class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
     def dwc_label_selecter(self):
         df_columns=self.darwinizerClass.dwc_label_checker(self.listWidget)
         self.ReadyButton_2.clicked.connect(lambda: self.darwinizerClass.dwc_label_transformer(self.listWidget,df_columns)) 
+
+    def visitors_label_selecter(self):
+        df_columns=self.darwinizerClass.visitors_label_filler(self.listWidget)
+        self.ReadyButton_3.clicked.connect(lambda: self.darwinizerClass.visitors_label_transformer(self.listWidget,df_columns)) 
+
 
 if __name__=="__main__":
     app=qtw.QApplication(sys.argv)

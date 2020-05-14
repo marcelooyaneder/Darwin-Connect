@@ -108,6 +108,27 @@ class file_entry():
         f.close()
         listWidget.clear()
     
+    def visitors_label_filler(self,listWidget):
+        with open(f"{self.route_destiny_label}\dwc_terms\df_columns_renamed.pkl", 'rb') as f:
+            df_columns = pickle.load(f)
+        listWidget.addItems(df_columns)
+        return df_columns
+
+    def visitors_label_transformer(self,listWidget,df_columns):
+        selected_indexes=[x.row() for x in listWidget.selectedIndexes()]
+        df_selected_visitors_labels=[]
+        i=0
+        while i <= len(df_columns)-1:
+            if i not in selected_indexes:
+                df_selected_visitors_labels.append(df_columns[i])
+            i=i+1
+        os.makedirs(os.path.dirname(f"{self.route_destiny_label}\dwc_terms\df_selected_visitors_labels.pkl"), exist_ok=True)
+        f = open(f"{self.route_destiny_label}\dwc_terms\df_selected_visitors_labels.pkl","wb")
+        pickle.dump(df_selected_visitors_labels,f)
+        f.close()
+        listWidget.clear()
+
+
     def sensitive_data(self):
         pass
 

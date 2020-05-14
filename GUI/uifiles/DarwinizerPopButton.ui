@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
-    <height>523</height>
+    <width>637</width>
+    <height>463</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>422</y>
+     <y>372</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -53,7 +53,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>441</y>
+     <y>391</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -66,7 +66,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>479</y>
+     <y>429</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -79,7 +79,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>460</y>
+     <y>410</y>
      <width>611</width>
      <height>14</height>
     </rect>
@@ -88,13 +88,13 @@
     <string>Ruta destino:</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>50</y>
+     <x>370</x>
+     <y>51</y>
      <width>161</width>
-     <height>78</height>
+     <height>131</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -134,6 +134,33 @@
     </item>
     <item row="2" column="1">
      <widget class="QPushButton" name="ReadyButton_2">
+      <property name="text">
+       <string>Listo!</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>148</width>
+        <height>18</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="VisitorsButton">
+      <property name="text">
+       <string>Visitas</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QPushButton" name="ReadyButton_3">
       <property name="text">
        <string>Listo!</string>
       </property>
