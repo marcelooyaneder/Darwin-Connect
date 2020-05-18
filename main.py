@@ -10,8 +10,10 @@ from PyQt5 import QtCore as qtc
 from GUI.MainWindow import Ui_MainWindow
 from GUI.RefreshDataBasePopButton import Ui_RefreshDataBasePopButton
 from GUI.StatsPopButton import Ui_StatsPopButton
+from GUI.DarwinizerPopButton import Ui_Darwinizer
 from scripts.refreshdatabase import *
 from scripts.graph_and_stats import *
+from scripts.darwinizer import *
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -31,6 +33,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         """Ventana principal"""
         self.refresh_button.clicked.connect(lambda: self.refresh_button_UI())
         self.stats_button.clicked.connect(self.stats_button_UI)
+        self.darwinizer_button.clicked.connect(self.darwinizer_button_UI)
 
         #End main UI code
         self.show
@@ -53,6 +56,10 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.build=StatsButton(self.route_destiny_response_label.text())
         self.build.show()
 
+    def darwinizer_button_UI(self):
+        self.build=DarwinizerButton(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text())
+        self.build.show()
+
 class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
     def __init__(self,OriginPathWay,DestinyPathWay):
         """MainWindow constructor"""
@@ -71,11 +78,9 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         self.show()
     
     def refresh_button_func(self):
-        route=self.route_destiny_response_label.text() #Ruta de destino de archivos 
-        full_df,organized_df,index,full_df_columns=refreshdatabase().file_organizer(self.xlsx_route_response_label.text()) #Abrir archivo excel, organized_df just dwc values
-        IDs=organized_df.index.tolist() #no considerar para file_creation 
+        full_df,organized_df,indexo=refreshdatabase().file_organizer(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text()) #Abrir archivo excel, organized_df just dwc values
+        IDs=organized_df.index.tolist()
         print('compare/create files...')
-
         if os.path.isdir(f"{self.route_destiny_response_label.text()}/files")==True:
             for id in IDs:
                 refreshdatabase().comparefiles(id,organized_df.loc[id],"dwc_files",self.route_destiny_response_label.text())
@@ -89,7 +94,7 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         elif self.question_1_neg_ans.isChecked():
             showroom_option_answer=False
         if showroom_option_answer==True:
-            showroom_df=refreshdatabase().visitors_file_maker(full_df)
+            showroom_df=refreshdatabase().visitors_file_maker(full_df,self.route_destiny_response_label.text(),indexo)
             #aca va la funcion de organizacion de showroom
             if os.path.isdir(f'{self.route_destiny_response_label}\showroom_files')==True:
                 for id in IDs:
@@ -135,6 +140,44 @@ class StatsButton(qtw.QWidget,Ui_StatsPopButton):
     
     def graph_button_func(self):
         dwc_graph().make_graph(self.stat_df,self.dwc_label_response.currentText(),self.graph_kind_response.currentText(),self.graph_title_response.text())
+
+class DarwinizerButton(qtw.QWidget,Ui_Darwinizer):
+    def __init__(self,OriginPathWay,DestinyPathWay):
+        """MainWindow constructor"""
+        super().__init__()
+        self.setupUi(self)
+        self.setWindowTitle("Darwin Connect")
+        self.listWidget.setSelectionMode(qtw.QAbstractItemView.ExtendedSelection)
+        # Var Definitions
+        self.OriginPathWay=OriginPathWay
+        self.DestinyPathway=DestinyPathWay
+        self.darwinizerClass=file_entry(self.OriginPathWay,self.DestinyPathway)
+        # Main UI code goes here
+        self.xlsx_route_response_label.setText(OriginPathWay)
+        self.route_destiny_response_label.setText(DestinyPathWay)
+        #self.exitbutton.clicked.connect(self.close)
+        self.DarwinizerButton.clicked.connect(lambda: self.darwin_analyzer())
+        self.DwCButton.clicked.connect(lambda: self.dwc_label_selecter())
+        self.VisitorsButton.clicked.connect(lambda: self.visitors_label_selecter())
+        #End main UI code
+        self.show()
+    
+    def darwin_analyzer(self):
+        self.listWidget.clear()
+        full_dataframe,darwinizer_list=self.darwinizerClass.darwinizer()
+        list_widget=[]
+        for verbatim,standard in darwinizer_list:
+            list_widget.append(f"{verbatim} -> {standard}")
+        self.listWidget.addItems(list_widget)
+        self.ReadyButton.clicked.connect(lambda: self.darwinizerClass.dataframe_label_transformer(full_dataframe,self.listWidget,darwinizer_list))
+
+    def dwc_label_selecter(self):
+        df_columns=self.darwinizerClass.dwc_label_checker(self.listWidget)
+        self.ReadyButton_2.clicked.connect(lambda: self.darwinizerClass.dwc_label_transformer(self.listWidget,df_columns)) 
+
+    def visitors_label_selecter(self):
+        df_columns=self.darwinizerClass.visitors_label_filler(self.listWidget)
+        self.ReadyButton_3.clicked.connect(lambda: self.darwinizerClass.visitors_label_transformer(self.listWidget,df_columns)) 
 
 
 if __name__=="__main__":
