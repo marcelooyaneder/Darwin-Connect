@@ -78,7 +78,7 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         self.show()
     
     def refresh_button_func(self):
-        full_df,organized_df=refreshdatabase().file_organizer(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text()) #Abrir archivo excel, organized_df just dwc values
+        full_df,organized_df,indexo=refreshdatabase().file_organizer(self.xlsx_route_response_label.text(),self.route_destiny_response_label.text()) #Abrir archivo excel, organized_df just dwc values
         IDs=organized_df.index.tolist()
         print('compare/create files...')
         if os.path.isdir(f"{self.route_destiny_response_label.text()}/files")==True:
@@ -94,7 +94,7 @@ class RefreshDataBaseButton(qtw.QWidget, Ui_RefreshDataBasePopButton):
         elif self.question_1_neg_ans.isChecked():
             showroom_option_answer=False
         if showroom_option_answer==True:
-            showroom_df=refreshdatabase().visitors_file_maker(full_df,self.route_destiny_response_label.text())
+            showroom_df=refreshdatabase().visitors_file_maker(full_df,self.route_destiny_response_label.text(),indexo)
             #aca va la funcion de organizacion de showroom
             if os.path.isdir(f'{self.route_destiny_response_label}\showroom_files')==True:
                 for id in IDs:

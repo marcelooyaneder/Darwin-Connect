@@ -42,7 +42,7 @@ class refreshdatabase():
         indexo=eg.choicebox(msg,title,data.columns.tolist())
         data=data.set_index(indexo, drop = True)
         dwc_df=dwc_df.set_index(indexo, drop = True)
-        return data,dwc_df
+        return data,dwc_df,indexo
 
     def comparefiles(self,ID,info,option,pathway):  #option invited, dwc_files
         filename1 = f"{pathway}/temp/{ID}.txt"
@@ -82,15 +82,13 @@ class refreshdatabase():
             print(f'permission to write in {filename} has been denied...')
         return 
 
-    def visitors_file_maker(self,full_df,route_destiny_label): 
+    def visitors_file_maker(self,full_df,route_destiny_label,indexo): 
         showroom_df=full_df.copy()
         with open(f"{route_destiny_label}\dwc_terms\df_selected_visitors_labels.pkl", 'rb') as f:
             choicebox = pickle.load(f)
-        try:
-            showroom_df=showroom_df[choicebox]
-        except:
-            pass
-        pass
+            if indexo in choicebox:
+                choicebox.remove(indexo)
+        showroom_df=showroom_df[choicebox]
         return showroom_df
         
     def df_to_csv(self,dataframe,pathway):
