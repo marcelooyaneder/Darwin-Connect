@@ -35,7 +35,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.stats_button.clicked.connect(self.stats_button_UI)
         self.darwinizer_button.clicked.connect(self.darwinizer_button_UI)
 
-        #End main UI codigo
+        #End main UI code
         self.show
     
     def filesearcher(self): #Funcion para obtener directorio del archivo excel a analizar
